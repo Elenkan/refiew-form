@@ -1,22 +1,25 @@
 <template>
-  <div id="review">
+  <div class="review">
     <h3 class="review__main-title">{{ title }}</h3>
     <button class="review__close-button" type="button"></button>
     <div class="review-header">
-      <img class="review__image" src="./assets/album-photo.png" width="102" height="68" alt="Главное фото отзыва">
-      <div class="review__wrapper">
-        <h3 class="review__title">Фоточки в свадебном платьице</h3>
-        <span class="review__author">Алена Смирнова</span>
+      <img class="review-header__image" src="./assets/images/album-photo.png" width="102" height="68" alt="Главное фото отзыва">
+      <div class="review-header__wrapper">
+        <h3 class="review-header__title">Фоточки в свадебном платьице</h3>
+        <span class="review-header__author">Алена Смирнова</span>
       </div>
     </div>
-    <form class="review-form" action="#" enctype="multipart/form-data" autocomplete="off">
-      <Rating />
+    <form class="review-form" action="#" enctype="multipart/form-data" method="post" autocomplete="off">
+      <Rating v-bind:categories="categories" />
       <textarea class="review-form__comment" id="comment" name="reviewer-comment" placeholder="Комментарий"></textarea>
       <label class="review-form__comment-label" for="comment">12/500</label>
-      <label class="review-form__load">
-        <input type="file" name="load-image">
-        <span></span>
-      </label>
+      <div class="review-form__gallery">
+        <input class="review-form__load-input" id="load-input" type="file" name="load-image">
+        <label class="review-form__load-label" for="load-input">
+        </label>
+        <img v-bind:src="photo" v-for="photo of photos" alt="Фото галереи" width="80" height="80">
+        <button class="review-form__delete-image" type="button"></button>
+      </div>
       <button class="review-form__button" type="submit">Отправить</button>
     </form>
   </div>
@@ -30,7 +33,18 @@ export default {
   },
   data() {
     return {
-      title: 'Мой отзыв'
+      title: 'Мой отзыв',
+      categories: [
+        { title: 'Скорость' },
+        { title: 'Скорость отдачи видео' },
+        { title: 'Качество' },
+        { title: 'Пунктуальность' }
+      ],
+      photos: [require('./assets/images/image-venice.png'),
+        require('./assets/images/image-walk.png'),
+        require('./assets/images/image-swimsuit.png'),
+        require('./assets/images/image-couple.png')
+      ]
     }
   }
 }
@@ -47,9 +61,9 @@ export default {
 
 $border: 1px solid #EAECF0;
 
-#review {
+.review {
   width: 560px;
-  // background-color: white;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +104,7 @@ $border: 1px solid #EAECF0;
 .review__close-button {
   width: 14px;
   height: 14px;
-  background-image: url('./assets/icon-close.svg');
+  background-image: url('./assets/images/icon-close.svg');
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
@@ -106,19 +120,19 @@ $border: 1px solid #EAECF0;
   padding: 0 calc(50% - 248px);
 }
 
-.review__image {
+.review-header__image {
   border-radius: 6px;
   margin-right: 20px;
 }
 
-.review__title {
+.review-header__title {
   @include title-style;
   width: 374px;
   margin-bottom: 0;
   margin-top: -2px;
 }
 
-.review__author {
+.review-header__author {
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
@@ -155,19 +169,52 @@ $border: 1px solid #EAECF0;
   align-self: flex-end;
 }
 
-.review-form__load {
+.review-form__load-label {
   display: block;
   width: 80px;
   height: 80px;
   border: $border;
   border-radius: 6px;
-  background: url('./assets/icon-plus.svg') center no-repeat,
+  margin-right: 8px;
+  background: url('./assets/images/icon-plus.svg') center no-repeat,
     #F3F4F6;
-  margin-bottom: 40px;
+  cursor: pointer;
+  position: relative;
+}
 
-  input {
-    display: none;
+ .review-form__load-input {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
   }
+
+
+input[type="file"]:focus + label {
+  outline: 1px solid #000;
+}
+
+.review-form__gallery {
+  display: flex;
+  margin-bottom: 40px;
+  position: relative;
+
+  img {
+    width: 80px;
+    height: 80px;
+    margin-right: 8px;
+    border-radius: 4px;
+  }
+}
+.review-form__delete-image {
+  position: absolute;
+  right: 72px;
+  top: 8px;
+  width: 32px;
+  height: 32px;
+  background: url('./assets/images/delete-sign.svg') no-repeat;
 }
 
 .review-form__button {
