@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 
 module.exports = {
   entry: './src/main.js',
@@ -52,7 +51,8 @@ module.exports = {
               'css-loader',
               'sass-loader?indentedSyntax'
             ]
-          }
+          },
+
           // other vue-loader options go here
         }
       },
@@ -67,7 +67,7 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
     ]
   },
   resolve: {
@@ -84,15 +84,9 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
-}
- plugins: [
-      new GoogleFontsPlugin({
-          fonts: [
-              { family: 'Montserrat', variants: [ '400','600', '500' ] }
-          ]
-      })
-  ]
+  devtool: '#eval-source-map',
+ }
+
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
