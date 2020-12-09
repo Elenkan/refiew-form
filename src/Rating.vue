@@ -24,7 +24,6 @@
     display: flex;
     flex-wrap: wrap;
     width: 496px;
-    height: 136px;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
@@ -32,6 +31,13 @@
     margin: 0 0 31px 0;
     padding: 0;
     border: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    .review-rating {
+      width: 290px;
+      margin-bottom: 23px;
+    }
   }
 
   </style>

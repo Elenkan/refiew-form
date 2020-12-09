@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
 body {
   font-family: ('Montserrat', 'Arial', sans-serif);
   min-width: 320px;
+  padding: 0 calc(50% - 280px);
 }
+
 img {
   max-width: 100%;
   height: auto;
@@ -19,4 +22,10 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+  @media screen and (max-width: 767px) {
+    body {
+      padding: 0 calc(50% - 160px);
+    }
 }

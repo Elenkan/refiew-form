@@ -11,6 +11,9 @@
     </div>
     <form class="review-form" action="#" enctype="multipart/form-data" method="post" autocomplete="off">
       <Rating v-bind:categories="categories" />
+      <button class="review-form__button-continue" type="button">Продолжить</button>
+      <h3 class="review__main-title review__main-title--mobile">{{ title }}</h3>
+      <button class="review__close-button review__close-button--mobile" type="button"></button>
       <textarea class="review-form__comment" id="comment" name="reviewer-comment" placeholder="Комментарий"></textarea>
       <label class="review-form__comment-label" for="comment">12/500</label>
       <div class="review-form__gallery">
@@ -44,7 +47,35 @@ export default {
         require('./assets/images/image-walk.png'),
         require('./assets/images/image-swimsuit.png'),
         require('./assets/images/image-couple.png')
-      ]
+      ],
+      width: 0,
+    }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.width = window.innerWidth;
+      if (this.width < 768) {
+        this.title = "Новый отзыв";
+        this.categories = [
+        { title: 'Скорость' },
+        { title: 'Скорость отдачи видео' },
+        { title: 'Исполнитель солнышка?' },
+        { title: 'Исполнитель солнышка?' }
+      ];
+
+      }
+      else {
+        this.title = "Мой отзыв";
+        this.categories = [
+        { title: 'Скорость' },
+        { title: 'Скорость отдачи видео' },
+        { title: 'Качество' },
+        { title: 'Пунктуальность' }
+      ];
+      }
     }
   }
 }
@@ -59,6 +90,15 @@ export default {
   margin-top: 2px;
 }
 
+@mixin button-style {
+  background: #53C6D1;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
 $border: 1px solid #EAECF0;
 
 .review {
@@ -69,7 +109,6 @@ $border: 1px solid #EAECF0;
   align-items: center;
   border-radius: 16px;
   border: $border;
-  margin: 0 calc(50% - 280px);
   margin-top: 20px;
   position: relative;
   padding-top: 18px;
@@ -99,7 +138,31 @@ $border: 1px solid #EAECF0;
   margin-left: 30px;
   align-self: baseline;
   margin-bottom: 40px;
+  position: relative;
 }
+.review__main-title--mobile {
+  display: none;
+}
+.review__main-title--mobile::before {
+    content: "";
+    display: none;
+    position: absolute;
+    right: 129px;
+    top: 3px;
+    width: 16px;
+    height: 15px;
+    background: url('./assets/images/arrow.svg') no-repeat;
+  }
+
+  .review__main-title--mobile::after {
+    content: "";
+    border-bottom: $border;
+    display: block;
+    position: absolute;
+    top: 38px;
+    width: 320px;
+    left: -52px;
+  }
 
 .review__close-button {
   width: 14px;
@@ -182,17 +245,17 @@ $border: 1px solid #EAECF0;
   position: relative;
 }
 
- .review-form__load-input {
-    width: 80px;
-    height: 80px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: 10;
-  }
+.review-form__load-input {
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 10;
+}
 
 
-input[type="file"]:focus + label {
+input[type="file"]:focus+label {
   outline: 1px solid #000;
 }
 
@@ -208,6 +271,7 @@ input[type="file"]:focus + label {
     border-radius: 4px;
   }
 }
+
 .review-form__delete-image {
   position: absolute;
   right: 72px;
@@ -218,16 +282,102 @@ input[type="file"]:focus + label {
 }
 
 .review-form__button {
+  @include button-style;
   width: 105px;
   height: 36px;
-  background: #53C6D1;
-  border-radius: 6px;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  color: #fff;
+
   position: relative;
   left: 406px;
 }
 
+.review-form__button-continue {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .review {
+    width: 320px;
+    margin-top: 55px;
+    padding-top: 19px;
+
+    &::before {
+      top: 504px;
+      width: 320px;
+    }
+    &::after {
+      width: 320px;
+    }
+  }
+
+  .review__main-title {
+    margin-bottom: 16px;
+      margin-top: -2px;
+  margin-left: 16px;
+  }
+.review__main-title--mobile {
+  display: block;
+  margin-top: -2px;
+  margin-left: 37px;
+}
+
+  .review__main-title--mobile::before {
+    display: block;
+  }
+
+  .review-header {
+    width: 290px;
+    flex-direction: column;
+
+    align-items: flex-start;
+    margin-bottom: 24px;
+
+    &__image {
+      width: 84px;
+      height: 56px;
+      margin-bottom: 15px;
+    }
+  }
+
+  .review-form {
+    width: 290px;
+  }
+
+  .review-form__button-continue {
+    display: block;
+    @include button-style;
+    width: 120px;
+    height: 36px;
+    align-self: flex-end;
+    margin-bottom: 20px;
+  }
+
+  .review__close-button--mobile {
+    top: 578px;
+  }
+
+  .review-form__comment {
+    width: 288px;
+    margin-top: 14px;
+    height: 146px;
+    margin-left: 2px;
+    padding-top: 16px;
+}
+
+.review-form__delete-image {
+  display: none;
+}
+
+.review-form__gallery {
+  flex-wrap: wrap;
+  padding-bottom: 112px;
+}
+
+.review-form__load-label {
+  margin-right: 10px;
+  margin-bottom: 8px
+}
+.review-form__button {
+  left: 184px;
+}
+}
 </style>

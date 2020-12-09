@@ -67,4 +67,13 @@ input[type="checkbox"] {
 */
 }
 
+@media screen and (max-width: 767px) {
+  .review-rating__item {
+    margin-bottom: 16px;
+  }
+  .review-rating__checkbox {
+    margin-right: 10px;
+  }
+}
+
 </style>
