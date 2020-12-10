@@ -407,6 +407,7 @@ input[type="file"]:focus+label {
 
     align-items: flex-start;
     margin-bottom: 24px;
+    padding: 0;
 
     &__image {
       width: 84px;

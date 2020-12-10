@@ -3,6 +3,7 @@
     <CategoryItem
     v-for="category of categories"
     v-bind:category="category"
+    v-bind:key="category.id"
     />
   </fieldset>
 </template>
