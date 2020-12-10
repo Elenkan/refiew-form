@@ -5,7 +5,6 @@ module.exports = {
         prependData: `
         @import "@/assets/normalize.scss";
         @import "@/assets/global-style.scss";
-        @import "@/assets/fonts.scss";
         `
       }
     }
