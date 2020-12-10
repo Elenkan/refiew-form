@@ -1,6 +1,5 @@
 <template>
   <fieldset class="review-rating">
-    <legend></legend>
     <CategoryItem
     v-for="category of categories"
     v-bind:category="category"
@@ -28,7 +27,7 @@
     font-size: 14px;
     line-height: 20px;
     color: #3C3C3C;
-    margin: 0 0 31px 0;
+    margin: 0;
     padding: 0;
     border: none;
   }
@@ -36,7 +35,7 @@
   @media screen and (max-width: 767px) {
     .review-rating {
       width: 290px;
-      margin-bottom: 23px;
+      margin-bottom: 25px;
     }
   }
 

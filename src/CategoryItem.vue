@@ -59,12 +59,12 @@ input[type="checkbox"] {
   margin-left: 4px;
 
   background: url('./assets/images/star.svg') no-repeat;
-  /*
+
   &:hover {
-   background: url('./assets/color-star.svg') no-repeat;
+   background: url('./assets/images/color-star.svg') no-repeat;
    cursor: pointer;
  }
-*/
+
 }
 
 @media screen and (max-width: 767px) {
