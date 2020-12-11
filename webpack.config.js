@@ -1,33 +1,52 @@
 const path = require('path')
 const webpack = require('webpack')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, 'dist'),
     filename: 'build.js'
   },
   plugins: [
-    new HTMLWebpackPlugin()
- ],
+    new HTMLWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new CleanWebpackPlugin(),
+    new ExtractTextPlugin('style.css')
+  ],
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ],
+        use: ExtractTextPlugin.extract({
+          use: ["vue-style-loader","css-loader"]
+        })
       },
       {
         test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ],
+        use: ExtractTextPlugin.extract({
+
+          fallback: 'vue-style-loader',
+          use: [
+              {
+              loader: 'css-loader',
+              options: {
+                url: false,
+                minimize: true,
+                sourceMap: true
+              }
+            },
+
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
       },
       {
         test: /\.sass$/,
@@ -89,7 +108,7 @@ module.exports = {
     hints: false
   },
   devtool: '#eval-source-map',
- }
+}
 
 
 if (process.env.NODE_ENV === 'production') {

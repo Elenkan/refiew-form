@@ -420,6 +420,16 @@ input[type="file"]:focus+label {
     width: 289px;
   }
 
+  .review-form__comment-part::before{
+    content: "";
+    display: block;
+    width: 320px;
+    height: 1px;
+    right: 15px;
+    bottom: 12px;
+    position: relative;
+    border-bottom: $border;
+  }
   .review-form__button-continue {
     display: block;
     @include button-style;
